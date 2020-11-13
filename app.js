@@ -20,6 +20,7 @@ var
                     check,
                     notified = false;
                 
+                // -- si se esta reproduciendo
                 $(el).bind("play", (e) => {
                     var 
                         duration = el.duration;
@@ -37,6 +38,8 @@ var
                         }    
                     })
                 })
+                
+                // -- 
                 $(el).bind("pause", () => {
                     // aqui se podria poner una alerta de algo q desees mostrarla en caso de que haga pausa
                     // recordandole q siga avanzando o si esta en mas del 50 se le puede decir q abandone ... 
@@ -62,6 +65,11 @@ var
         }
     }),
     
+    /* METODO PERSONALIZADO PARA ENVIOS DE PETICIONES AJAX, 
+     *
+     * internamente internamente implementa promises 
+     */
+    
     http = ({
         get : (url) => {
                 
@@ -73,10 +81,7 @@ var
                 ajax = $.ajax({
                     url: url,
                     method: "POST",
-                    data: {
-                        idUser: d.idu,
-                        idVideo: d.idv
-                    }
+                    data: d
                 })
             
             ajax.done((data) => {
