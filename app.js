@@ -51,7 +51,42 @@ var
         // send url-post-data to server
         sendData: (el) => {
             var 
-                el = $(el)
-            console.log(el)
+                el  = $(el),
+                url = el.data('url-post'), // url al cual enviar el post
+                tku = $("#token").get(0).value, // token del usuario
+                dat = JSON.parse(atob(tku)),
+                idu = dat.idu, // id del usuario
+                idv = dat.idv  // id del video
+            
+            http.post(url, {idu: idu, idv: idv})
+        }
+    }),
+    
+    http = ({
+        get : (url) => {
+                
+        },
+        
+        // cb : function de callback , cbe: function de callback cuando suceda un error
+        post: (url, d, cb = null, cbe = null)=> {
+            var 
+                ajax = $.ajax({
+                    url: url,
+                    method: "POST",
+                    data: {
+                        idUser: d.idu,
+                        idVideo: d.idv
+                    }
+                })
+            
+            ajax.done((data) => {
+                if (cb != null) cb(data);
+                else console.log("DATOS SI TODO FUNCIONO")
+            })
+            
+            ajax.fail((error) => {
+                if (cbe != null) cbe(error);
+                else console.log("DATOS SI NO FUNCIONO")
+            })
         }
     })
